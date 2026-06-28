@@ -857,39 +857,39 @@ export default function ProductsPage() {
             No products found. Click "Add New Product" to create one.
           </div>
         ) : (
-          <div className="overflow-x-auto bg-white rounded-xl shadow-lg border border-gray-100">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+          <div className="overflow-x-auto bg-white border border-gray-300">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead className="bg-white">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Product Name</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Category</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Price</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Pre-Order</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Actions</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Product Name</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Category</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Price</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Pre-Order</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Actions</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-100">
+              <tbody className="bg-white divide-y divide-gray-200">
                 {products.map((product) => (
-                  <tr key={product._id} className="hover:bg-blue-50/50 transition-colors duration-200">
+                  <tr key={product._id} className="hover:bg-gray-50 transition-colors duration-200">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-gray-900">{product.name}</div>
+                      <div className="text-sm font-bold text-black">{product.name}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-600">
+                      <div className="text-sm font-medium text-black">
                         {categories.find((cat) => cat._id === product.categoryId)?.name || "Uncategorized"}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-bold text-emerald-600">${product.price.toFixed(2)}</div>
+                      <div className="text-sm font-bold text-black">${product.price.toFixed(2)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${product.isAvailable ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-100 text-red-800 border border-red-200'}`}>
+                      <span className={`inline-flex px-3 py-1 text-xs font-bold rounded ${product.isAvailable ? 'bg-white text-black border border-gray-400' : 'bg-gray-100 text-black border border-gray-400'}`}>
                         {product.isAvailable ? "Available" : "Unavailable"}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${product.allowPreOrder ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-gray-100 text-gray-600 border border-gray-200'}`}>
+                      <span className={`inline-flex px-3 py-1 text-xs font-bold rounded ${product.allowPreOrder ? 'bg-white text-black border border-gray-400' : 'bg-gray-100 text-black border border-gray-400'}`}>
                         {product.allowPreOrder ? "Yes" : "No"}
                       </span>
                     </td>
@@ -900,7 +900,7 @@ export default function ProductsPage() {
                             setSelectedProduct(product);
                             setShowHistoryModal(true);
                           }}
-                          className="text-blue-500 hover:text-blue-700 bg-blue-50 p-2 rounded-lg transition-colors"
+                          className="text-black hover:text-gray-600 bg-white border border-gray-300 p-2 rounded transition-colors"
                           title="View History"
                         >
                           <FaHistory size={16} />
@@ -919,7 +919,7 @@ export default function ProductsPage() {
                             });
                             setShowEditModal(true);
                           }}
-                          className="text-amber-500 hover:text-amber-700 bg-amber-50 p-2 rounded-lg transition-colors"
+                          className="text-black hover:text-gray-600 bg-white border border-gray-300 p-2 rounded transition-colors"
                           title="Edit"
                         >
                           <FaEdit size={16} />
@@ -929,7 +929,7 @@ export default function ProductsPage() {
                             setSelectedProduct(product);
                             setShowDeleteModal(true);
                           }}
-                          className="text-rose-500 hover:text-rose-700 bg-rose-50 p-2 rounded-lg transition-colors"
+                          className="text-black hover:text-gray-600 bg-white border border-gray-300 p-2 rounded transition-colors"
                           title="Delete"
                         >
                           <FaTrash size={16} />
