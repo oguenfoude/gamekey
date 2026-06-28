@@ -1,7 +1,8 @@
 // src/utils/apiClient.ts
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL || "https://storebot-dl12.onrender.com";
+  process.env.NEXT_PUBLIC_BASE_URL ||
+  "http://g48k8k0osckgs00ok8ww088o.89.117.53.152.sslip.io";
 
 type ApiResponse<T = any> = {
   data?: T;
@@ -16,7 +17,7 @@ type RequestOptions = {
 // Helper function to handle fetch requests
 async function fetchWithTimeout(
   url: string,
-  options: RequestInit & { timeout?: number } = {}
+  options: RequestInit & { timeout?: number } = {},
 ): Promise<Response> {
   const { timeout = 10000 } = options; // Default timeout of 10 seconds
 
@@ -52,7 +53,7 @@ async function getErrorMessage(response: Response): Promise<string> {
 export const apiClient = {
   get: async <T = any>(
     endpoint: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> => {
     const response = await fetchWithTimeout(`${BASE_URL}${endpoint}`, {
       method: "GET",
@@ -74,7 +75,7 @@ export const apiClient = {
   post: async <T = any>(
     endpoint: string,
     body: Record<string, any>,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> => {
     const response = await fetchWithTimeout(`${BASE_URL}${endpoint}`, {
       method: "POST",
@@ -97,7 +98,7 @@ export const apiClient = {
   put: async <T = any>(
     endpoint: string,
     body?: Record<string, any>,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> => {
     const response = await fetchWithTimeout(`${BASE_URL}${endpoint}`, {
       method: "PUT",
@@ -119,7 +120,7 @@ export const apiClient = {
 
   delete: async <T = any>(
     endpoint: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<T> => {
     const response = await fetchWithTimeout(`${BASE_URL}${endpoint}`, {
       method: "DELETE",
