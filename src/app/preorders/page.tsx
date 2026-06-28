@@ -294,7 +294,7 @@ export default function PreOrdersPage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <div 
                     onClick={() => toggleOrderExpand(preOrder._id)}
-                    className="cursor-pointer flex-grow space-y-1"
+                    className="cursor-pointer grow space-y-1"
                   >
                     <p className="text-sm font-semibold">
                       {preOrder.productName} - ${preOrder.productPrice}
