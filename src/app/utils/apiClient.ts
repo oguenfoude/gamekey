@@ -2,7 +2,9 @@
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_BASE_URL ||
-  "http://g48k8k0osckgs00ok8ww088o.89.117.53.152.sslip.io";
+  (typeof window !== "undefined"
+    ? "/api/proxy"
+    : "http://g48k8k0osckgs00ok8ww088o.89.117.53.152.sslip.io");
 
 type ApiResponse<T = any> = {
   data?: T;
