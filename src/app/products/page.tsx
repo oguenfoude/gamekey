@@ -601,7 +601,6 @@ export default function ProductsPage() {
     }
   };
 
-  // Update fetchProducts to handle errors better
   const fetchProducts = async () => {
     try {
       setIsLoading(true);
@@ -612,9 +611,13 @@ export default function ProductsPage() {
       }
 
       setProducts(response);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching products:", error);
-      showAlert("error", "Failed to fetch products. Please refresh the page.");
+      if (error.message && (error.message.includes("No products found") || error.message.includes("404"))) {
+        setProducts([]);
+      } else {
+        showAlert("error", "Failed to fetch products. Please refresh the page.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -854,96 +857,89 @@ export default function ProductsPage() {
             No products found. Click "Add New Product" to create one.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {products.map((product) => (
-              <div
-                key={product._id}
-                className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="text-xl font-bold text-gray-800">
-                      {product.name}
-                    </h2>
-                    <p className="text-lg text-green-600 font-semibold">
-                      ${product.price.toFixed(2)}
-                    </p>
-                  </div>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setShowHistoryModal(true);
-                      }}
-                      className="text-blue-500 hover:text-blue-700"
-                      title="View History"
-                    >
-                      <FaHistory />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setNewProductData({
-                          name: product.name,
-                          description: product.description,
-                          price: product.price.toString(),
-                          emailsText: product.emails.join(", "),
-                          categoryId: product.categoryId,
-                          isAvailable: product.isAvailable,
-                          allowPreOrder: product.allowPreOrder,
-                        });
-                        setShowEditModal(true);
-                      }}
-                      className="text-yellow-500 hover:text-yellow-700"
-                    >
-                      <FaEdit />
-                    </button>
-                    <button
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setShowDeleteModal(true);
-                      }}
-                      className="text-red-500 hover:text-red-700"
-                    >
-                      <FaTrash />
-                    </button>
-                  </div>
-                </div>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500">Category:</span>
-                    <span className="text-sm font-medium text-gray-800">
-                      {categories.find((cat) => cat._id === product.categoryId)
-                        ?.name || "Uncategorized"}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500">Available:</span>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        product.isAvailable
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                      }`}
-                    >
-                      {product.isAvailable ? "Yes" : "No"}
-                    </span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-500">Pre-Order:</span>
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        product.allowPreOrder
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-gray-100 text-gray-800"
-                      }`}
-                    >
-                      {product.allowPreOrder ? "Yes" : "No"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="overflow-x-auto bg-white rounded-xl shadow-lg border border-gray-100">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
+                <tr>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Product Name</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Category</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">Pre-Order</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-gray-600 uppercase tracking-wider">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-100">
+                {products.map((product) => (
+                  <tr key={product._id} className="hover:bg-blue-50/50 transition-colors duration-200">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-semibold text-gray-900">{product.name}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-600">
+                        {categories.find((cat) => cat._id === product.categoryId)?.name || "Uncategorized"}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-bold text-emerald-600">${product.price.toFixed(2)}</div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${product.isAvailable ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-red-100 text-red-800 border border-red-200'}`}>
+                        {product.isAvailable ? "Available" : "Unavailable"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full shadow-sm ${product.allowPreOrder ? 'bg-blue-100 text-blue-800 border border-blue-200' : 'bg-gray-100 text-gray-600 border border-gray-200'}`}>
+                        {product.allowPreOrder ? "Yes" : "No"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex justify-end space-x-3">
+                        <button
+                          onClick={() => {
+                            setSelectedProduct(product);
+                            setShowHistoryModal(true);
+                          }}
+                          className="text-blue-500 hover:text-blue-700 bg-blue-50 p-2 rounded-lg transition-colors"
+                          title="View History"
+                        >
+                          <FaHistory size={16} />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedProduct(product);
+                            setNewProductData({
+                              name: product.name,
+                              description: product.description,
+                              price: product.price.toString(),
+                              emailsText: product.emails.join(", "),
+                              categoryId: product.categoryId,
+                              isAvailable: product.isAvailable,
+                              allowPreOrder: product.allowPreOrder,
+                            });
+                            setShowEditModal(true);
+                          }}
+                          className="text-amber-500 hover:text-amber-700 bg-amber-50 p-2 rounded-lg transition-colors"
+                          title="Edit"
+                        >
+                          <FaEdit size={16} />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSelectedProduct(product);
+                            setShowDeleteModal(true);
+                          }}
+                          className="text-rose-500 hover:text-rose-700 bg-rose-50 p-2 rounded-lg transition-colors"
+                          title="Delete"
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
