@@ -2,18 +2,25 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground: #000000;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Global override to ensure all projects are strictly black, white, and gray */
+[class*="bg-green-"], [class*="bg-blue-"], [class*="bg-red-"], [class*="bg-yellow-"], [class*="bg-amber-"], [class*="bg-rose-"], [class*="bg-emerald-"], [class*="bg-purple-"], [class*="bg-indigo-"], [class*="bg-teal-"] {
+  background-color: #f3f4f6 !important; /* tailwind gray-100 */
+  color: #000000 !important;
+}
+
+[class*="text-green-"], [class*="text-blue-"], [class*="text-red-"], [class*="text-yellow-"], [class*="text-amber-"], [class*="text-rose-"], [class*="text-emerald-"], [class*="text-purple-"], [class*="text-indigo-"], [class*="text-teal-"] {
+  color: #000000 !important; /* Force text to black */
+}
+
+[class*="border-green-"], [class*="border-blue-"], [class*="border-red-"], [class*="border-yellow-"], [class*="border-amber-"], [class*="border-rose-"], [class*="border-emerald-"], [class*="border-purple-"], [class*="border-indigo-"], [class*="border-teal-"] {
+  border-color: #d1d5db !important; /* tailwind gray-300 */
 }
