@@ -842,7 +842,7 @@ export default function ProductsPage() {
 
       <button
         onClick={() => setShowCreateModal(true)}
-        className="bg-green-500 text-white px-6 py-2 rounded-lg mb-4 shadow hover:bg-green-600 transition flex items-center"
+        className="bg-black text-white px-6 py-2 rounded mb-4 hover:bg-gray-800 transition flex items-center border border-black"
       >
         <FaPlusCircle className="mr-2" /> Add New Product
       </button>
@@ -859,24 +859,24 @@ export default function ProductsPage() {
         ) : (
           <div className="overflow-x-auto bg-white border border-gray-300">
             <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-white">
+              <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Product Name</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Category</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Price</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Status</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Pre-Order</th>
-                  <th className="px-6 py-4 text-right text-xs font-bold text-black uppercase tracking-wider border-b border-gray-300">Actions</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Product Name</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Category</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Price</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-4 text-left text-xs font-bold text-black uppercase tracking-wider">Pre-Order</th>
+                  <th className="px-6 py-4 text-right text-xs font-bold text-black uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {products.map((product) => (
-                  <tr key={product._id} className="hover:bg-gray-50 transition-colors duration-200">
+                  <tr key={product._id} className="hover:bg-gray-100 transition-colors duration-200">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-bold text-black">{product.name}</div>
+                      <div className="text-sm font-semibold text-black">{product.name}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-black">
+                      <div className="text-sm text-black">
                         {categories.find((cat) => cat._id === product.categoryId)?.name || "Uncategorized"}
                       </div>
                     </td>
@@ -884,12 +884,12 @@ export default function ProductsPage() {
                       <div className="text-sm font-bold text-black">${product.price.toFixed(2)}</div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-3 py-1 text-xs font-bold rounded ${product.isAvailable ? 'bg-white text-black border border-gray-400' : 'bg-gray-100 text-black border border-gray-400'}`}>
+                      <span className="inline-flex px-3 py-1 text-xs font-semibold rounded bg-gray-200 text-black border border-gray-400">
                         {product.isAvailable ? "Available" : "Unavailable"}
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className={`inline-flex px-3 py-1 text-xs font-bold rounded ${product.allowPreOrder ? 'bg-white text-black border border-gray-400' : 'bg-gray-100 text-black border border-gray-400'}`}>
+                      <span className="inline-flex px-3 py-1 text-xs font-semibold rounded bg-gray-200 text-black border border-gray-400">
                         {product.allowPreOrder ? "Yes" : "No"}
                       </span>
                     </td>
@@ -900,7 +900,7 @@ export default function ProductsPage() {
                             setSelectedProduct(product);
                             setShowHistoryModal(true);
                           }}
-                          className="text-black hover:text-gray-600 bg-white border border-gray-300 p-2 rounded transition-colors"
+                          className="text-black hover:text-gray-600 bg-gray-200 p-2 rounded transition-colors border border-gray-300 hover:bg-gray-300"
                           title="View History"
                         >
                           <FaHistory size={16} />
@@ -919,7 +919,7 @@ export default function ProductsPage() {
                             });
                             setShowEditModal(true);
                           }}
-                          className="text-black hover:text-gray-600 bg-white border border-gray-300 p-2 rounded transition-colors"
+                          className="text-black hover:text-gray-600 bg-gray-200 p-2 rounded transition-colors border border-gray-300 hover:bg-gray-300"
                           title="Edit"
                         >
                           <FaEdit size={16} />
@@ -929,7 +929,7 @@ export default function ProductsPage() {
                             setSelectedProduct(product);
                             setShowDeleteModal(true);
                           }}
-                          className="text-black hover:text-gray-600 bg-white border border-gray-300 p-2 rounded transition-colors"
+                          className="text-black hover:text-gray-600 bg-gray-200 p-2 rounded transition-colors border border-gray-300 hover:bg-gray-300"
                           title="Delete"
                         >
                           <FaTrash size={16} />
