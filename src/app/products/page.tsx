@@ -721,14 +721,11 @@ export default function ProductsPage() {
       }
 
       const emailsArray = emailsText
-        .split(",")
-        .map((email) => email.trim())
-        .filter((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
-
-      if (emailsArray.length === 0) {
-        showAlert("error", "At least one valid email is required");
-        return;
-      }
+        ? emailsText
+            .split(",")
+            .map((email) => email.trim())
+            .filter((email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+        : [];
 
       const productData = {
         name,
@@ -1005,7 +1002,7 @@ export default function ProductsPage() {
             </div>
 
             <div>
-              <label className="block mb-2 font-medium">Emails *</label>
+              <label className="block mb-2 font-medium">Emails (Optional)</label>
               <textarea
                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter emails, one per line (e.g., email@domain.com:password)"
@@ -1016,11 +1013,7 @@ export default function ProductsPage() {
                     emailsText: e.target.value,
                   })
                 }
-                required
               />
-              <p className="mt-1 text-sm text-gray-500">
-                At least one valid email is required
-              </p>
             </div>
 
             <div className="flex space-x-4">
