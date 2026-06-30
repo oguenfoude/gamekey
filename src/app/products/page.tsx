@@ -517,10 +517,11 @@ export default function ProductsPage() {
   const fetchCategories = async () => {
     try {
       const response = await apiClient.get("/categories");
-      setCategories(response);
+      setCategories(response || []);
     } catch (error) {
       showAlert("error", "Failed to fetch categories");
       console.error("Error fetching categories:", error);
+      setCategories([]);
     }
   };
 
@@ -610,12 +611,11 @@ export default function ProductsPage() {
         throw new Error("Failed to fetch products");
       }
 
-      setProducts(response);
+      setProducts(response || []);
     } catch (error: any) {
       console.error("Error fetching products:", error);
-      if (error.message && (error.message.includes("No products found") || error.message.includes("404"))) {
-        setProducts([]);
-      } else {
+      setProducts([]);
+      if (!(error.message && (error.message.includes("No products found") || error.message.includes("404")))) {
         showAlert("error", "Failed to fetch products. Please refresh the page.");
       }
     } finally {

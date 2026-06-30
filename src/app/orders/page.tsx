@@ -32,7 +32,7 @@ export default function UsersPage() {
       setIsLoading(true);
       try {
         const response = await apiClient.get("/users");
-        setUsers(response);
+        setUsers(response || []);
       } catch (error) {
         console.error("Error fetching users:", error);
       } finally {

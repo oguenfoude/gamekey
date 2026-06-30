@@ -44,10 +44,11 @@ export default function CategoriesPage() {
     try {
       setIsLoading(true);
       const response = await apiClient.get("/categories");
-      setCategories(response);
+      setCategories(response || []);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching categories:", error);
+      setCategories([]);
       setIsLoading(false);
     }
   };
@@ -56,9 +57,10 @@ export default function CategoriesPage() {
   const fetchCategoryHistory = async (categoryId: string) => {
     try {
       const response = await apiClient.get(`/history/category/${categoryId}`);
-      setCategoryHistory(response);
+      setCategoryHistory(response || []);
     } catch (error) {
       console.error("Error fetching category history:", error);
+      setCategoryHistory([]);
     }
   };
 

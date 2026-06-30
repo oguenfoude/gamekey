@@ -14,13 +14,16 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const products = await apiClient.get("/products");
-        setTotalProducts(products.length);
+        setTotalProducts(products ? products.length : 0);
         const users = await apiClient.get("/users");
-        setTotalUsers(users.length);
+        setTotalUsers(users ? users.length : 0);
         const categories = await apiClient.get("/categories");
-        setTotalCategories(categories.length);
+        setTotalCategories(categories ? categories.length : 0);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setTotalProducts(0);
+        setTotalUsers(0);
+        setTotalCategories(0);
       }
     };
 

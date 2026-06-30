@@ -38,7 +38,7 @@ export default function NotificationsPage() {
     try {
       setIsLoading(true);
       const response = await apiClient.get("/notifications");
-      setNotifications(response);
+      setNotifications(response || []);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching notifications:", error);

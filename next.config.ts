@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/proxy/:path*",
-        destination: "http://g48k8k0osckgs00ok8ww088o.89.117.53.152.sslip.io/:path*",
+        destination: "http://dc8wck04cgw8wc4ockg0okc4.89.117.53.152.sslip.io/:path*",
       },
     ];
   },

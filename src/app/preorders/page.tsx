@@ -87,7 +87,7 @@ export default function PreOrdersPage() {
       setIsLoading(true);
       setError(null);
       const response = await apiClient.get("/preorders");
-      setPreOrders(response);
+      setPreOrders(response || []);
 
       const userIds = Array.from(new Set(response.map((p: PreOrder) => p.userId)));
       const usersData = await Promise.all(

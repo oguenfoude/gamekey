@@ -188,8 +188,8 @@ export default function UsersPage() {
     try {
       setIsLoading(true);
       const response = await apiClient.get<User[]>("/users");
-      setUsers(response);
-      setFilteredUsers(response);
+      setUsers(response || []);
+      setFilteredUsers(response || []);
     } catch (error) {
       console.error("Error fetching users:", error);
     } finally {
